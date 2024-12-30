@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c067217-acb0-44e5-b66e-70b686484023" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/checkstyle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/checkstyle.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -216,7 +214,7 @@
       <option name="presentableId" value="Default" />
       <updated>1735261879837</updated>
       <workItem from="1735261881205" duration="11838000" />
-      <workItem from="1735440964434" duration="5442000" />
+      <workItem from="1735440964434" duration="5708000" />
     </task>
     <servers />
   </component>
