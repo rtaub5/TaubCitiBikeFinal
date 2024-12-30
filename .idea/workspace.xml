@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c067217-acb0-44e5-b66e-70b686484023" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.github/workflows/checkstyle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/checkstyle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +216,7 @@
       <option name="presentableId" value="Default" />
       <updated>1735261879837</updated>
       <workItem from="1735261881205" duration="11838000" />
-      <workItem from="1735440964434" duration="5708000" />
+      <workItem from="1735440964434" duration="6368000" />
     </task>
     <servers />
   </component>
@@ -236,17 +238,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java</url>
-          <line>15</line>
+          <line>16</line>
           <option name="timeStamp" value="6" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java</url>
-          <line>28</line>
+          <line>29</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java</url>
-          <line>124</line>
+          <line>123</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>

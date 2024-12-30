@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CitiBikeServiceTest
 {
     CitiBikeService service = new CitiBikeServiceFactory().getService();
+
     @Test
     void getStations()
     {
@@ -37,7 +38,7 @@ class CitiBikeServiceTest
         String currStationId = "1846085734612252774";
         Stations stations = service.getStatuses().blockingGet();
         Station currStation = stations.data.stations.get(0);
-        for(Station station : stations.data.stations)
+        for (Station station : stations.data.stations)
         {
             if (station.station_id.equals(currStationId))
             {
@@ -94,9 +95,7 @@ class CitiBikeServiceTest
                 {
                     combinedStations.add(station);
                 }
-            }
-            // if finding the closest dock, omit stations with no docks available
-            else if (retVal == 2)
+            } else if (retVal == 2) // if finding the closest dock, omit stations with no docks available
             {
                 if (station.num_docks_available != 0)
                 {
@@ -140,9 +139,9 @@ class CitiBikeServiceTest
         double dLon = lon2Rad - lon1Rad;
 
         // Haversine formula
-        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1Rad) * Math.cos(lat2Rad) *
-                        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
+                + Math.cos(lat1Rad) * Math.cos(lat2Rad)
+                * Math.sin(dLon / 2) * Math.sin(dLon / 2);
 
         double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
