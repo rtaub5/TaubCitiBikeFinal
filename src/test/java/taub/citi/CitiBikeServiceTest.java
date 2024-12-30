@@ -56,9 +56,10 @@ class CitiBikeServiceTest
         Stations stationInfo = service.getStations().blockingGet();
         Stations stationStatus = service.getStatuses().blockingGet();
         int retval = 1; // finding the closest bike
-        List<Station> combinedStations = combineStationInfo(stationInfo.data.stations, stationStatus.data.stations, retval);
+        List<Station> combinedStations =
+                combineStationInfo(stationInfo.data.stations, stationStatus.data.stations, retval);
         Station station = findClosestStation(currLat, currLon, combinedStations);
-        assertNotEquals(0,station.num_bikes_available);
+        assertNotEquals(0, station.num_bikes_available);
     }
 
     @Test
@@ -69,9 +70,10 @@ class CitiBikeServiceTest
         Stations stationInfo = service.getStations().blockingGet();
         Stations stationStatus = service.getStatuses().blockingGet();
         int retval = 2; // finding the closest slot
-        List<Station> combinedStations = combineStationInfo(stationInfo.data.stations, stationStatus.data.stations, retval);
+        List<Station> combinedStations =
+                combineStationInfo(stationInfo.data.stations, stationStatus.data.stations, retval);
         Station station = findClosestStation(currLat, currLon, combinedStations);
-        assertNotEquals(0,station.num_docks_available);
+        assertNotEquals(0, station.num_docks_available);
     }
 
     private List<Station> combineStationInfo(List<Station> stationInfo, List<Station> stationStatus, int retVal)
@@ -89,13 +91,17 @@ class CitiBikeServiceTest
             if (retVal == 1)
             {
                 if (station.num_bikes_available != 0)
+                {
                     combinedStations.add(station);
+                }
             }
             // if finding the closest dock, omit stations with no docks available
-            if (retVal == 2)
+            else if (retVal == 2)
             {
                 if (station.num_docks_available != 0)
+                {
                     combinedStations.add(station);
+                }
             }
         }
         return combinedStations;

@@ -2,6 +2,7 @@ package taub.citi;
 
 public class Station
 {
+    //CHECKSTYLE:OFF
     public String station_type;
     public boolean has_kiosk;
     public String name;
@@ -36,6 +37,7 @@ public class Station
     {
         return station_id;
     }
+    //CHECKSTYLE:ON
 
 }
 

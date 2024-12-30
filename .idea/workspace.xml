@@ -5,16 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1c067217-acb0-44e5-b66e-70b686484023" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/taub/citi/CitiBikeService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/taub/citi/CitiBikeServiceFactory.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Data.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Stations.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/taub/citi/Station.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -223,7 +216,7 @@
       <option name="presentableId" value="Default" />
       <updated>1735261879837</updated>
       <workItem from="1735261881205" duration="11838000" />
-      <workItem from="1735440964434" duration="5058000" />
+      <workItem from="1735440964434" duration="5442000" />
     </task>
     <servers />
   </component>
@@ -255,7 +248,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/taub/citi/CitiBikeServiceTest.java</url>
-          <line>118</line>
+          <line>124</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
       </breakpoints>
