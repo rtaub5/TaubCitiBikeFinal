@@ -31,7 +31,7 @@ public class Stations
 
     // usage is to call the method from the list of stationInfos and pass in the stationstatuses
     // (This method won't work in the opposite order)
-    public Stations combineStationInfo(List<Station> stationStatus, int bikeOrSlotSelection)
+    public Stations combineStationInfo(List<Station> stationStatus, Selection selection)
     {
         List<Station> stationInfo = this.data.stations;
         stationInfo.sort(Comparator.comparing(Station::getStationId));
@@ -44,18 +44,12 @@ public class Stations
             station.lon = stationInfo.get(ix).lon;
 
             // if finding the closest bike, omit stations with no bikes available
-            if (bikeOrSlotSelection == 1)
+            if (selection == Selection.BIKE && station.num_bikes_available != 0)
             {
-                if (station.num_bikes_available != 0)
-                {
-                    combinedStations.add(station);
-                }
-            } else if (bikeOrSlotSelection == 2) // if finding the closest dock, omit stations with no docks available
+                combinedStations.add(station);
+            } else if (selection == Selection.SLOT && station.num_docks_available != 0) // if finding the closest dock, omit stations with no docks available
             {
-                if (station.num_docks_available != 0)
-                {
-                    combinedStations.add(station);
-                }
+                combinedStations.add(station);
             }
         }
         Stations combined = new Stations(combinedStations);

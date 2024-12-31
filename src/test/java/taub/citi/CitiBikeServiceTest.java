@@ -48,9 +48,8 @@ class CitiBikeServiceTest
         double currLon = -73.1;
         Stations stationInfo = service.getStations().blockingGet();
         Stations stationStatus = service.getStatuses().blockingGet();
-        int selection = 1; // finding the closest bike
         Stations combinedStations =
-                stationInfo.combineStationInfo(stationStatus.data.stations, selection);
+                stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);
         Station station = combinedStations.findClosestStation(currLat, currLon);
         assertNotEquals(0, station.num_bikes_available);
     }
@@ -62,9 +61,8 @@ class CitiBikeServiceTest
         double currLon = -73.1;
         Stations stationInfo = service.getStations().blockingGet();
         Stations stationStatus = service.getStatuses().blockingGet();
-        int selection = 2; // finding the closest slot
         Stations combinedStations =
-                stationInfo.combineStationInfo(stationStatus.data.stations, selection);
+                stationInfo.combineStationInfo(stationStatus.data.stations, Selection.SLOT);
         Station station = combinedStations.findClosestStation(currLat, currLon);
         assertNotEquals(0, station.num_docks_available);
     }
