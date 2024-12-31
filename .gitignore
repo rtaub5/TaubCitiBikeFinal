@@ -40,3 +40,9 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+.idea/
+out/
+.gradle/
+build/
+.DS_STORE
+**/apikey.properties
