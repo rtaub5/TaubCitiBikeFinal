@@ -47,7 +47,8 @@ public class Stations
             if (selection == Selection.BIKE && station.num_bikes_available != 0)
             {
                 combinedStations.add(station);
-            } else if (selection == Selection.SLOT && station.num_docks_available != 0) {
+            } else if (selection == Selection.SLOT
+                    && station.num_docks_available != 0) {
                 // if finding the closest dock, omit stations with no docks available
                 combinedStations.add(station);
             }
