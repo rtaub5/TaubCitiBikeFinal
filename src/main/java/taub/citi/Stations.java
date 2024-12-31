@@ -107,9 +107,4 @@ public class Stations
         return distance;
     }
 
-
-
-
-
-
 }
