@@ -1,10 +1,12 @@
 package citi;
+
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.google.gson.Gson;
 
-public class CitiBikeRequestHandler implements RequestHandler<APIGatewayProxyRequestEvent, CitiBikeRequestHandler.CitiBikeResponse>
+public class CitiBikeRequestHandler implements
+        RequestHandler<APIGatewayProxyRequestEvent, CitiBikeRequestHandler.CitiBikeResponse>
 {
 
     @Override
@@ -24,18 +26,20 @@ public class CitiBikeRequestHandler implements RequestHandler<APIGatewayProxyReq
         Stations stationsWithBikes =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);
         Station startingStation = stationsWithBikes.findClosestStation(request.from().lat, request.from().lon);
-        Stations stationsWithSlots = stationInfo.combineStationInfo(stationStatus.data.stations, Selection.SLOT);
+        Stations stationsWithSlots = stationInfo.
+                combineStationInfo(stationStatus.data.stations, Selection.SLOT);
         Station returningStation = stationsWithSlots.findClosestStation(request.to().lat, request.to().lon);
         CitiBikeResponse response = new CitiBikeResponse(request.from(), startingStation, returningStation, request.to());
         return  response;
     }
 
-    record From (
+    record From(
             double lat,
             double lon
     )
     {}
-    record To (
+
+    record To(
             double lat,
             double lon
     ) {}
@@ -49,8 +53,3 @@ public class CitiBikeRequestHandler implements RequestHandler<APIGatewayProxyReq
 
 
 }
-record CitiBikeRequest(
-        CitiBikeRequestHandler.From from,
-        CitiBikeRequestHandler.To to
-)
-{}

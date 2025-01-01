@@ -15,7 +15,6 @@ class CitiBikeServiceTest
     {
         Stations stations = service.getStations().blockingGet();
         Station station1 = stations.data.stations.get(0);
-      //  assertNotNull(station1.station_type);
         assertNotNull(station1.station_id);
         assertNotNull(station1.name);
     }
@@ -28,7 +27,6 @@ class CitiBikeServiceTest
         Station station1 = stations.data.stations.get(0);
         assertNotNull(station1.station_id);
         assertNotNull(station1.num_docks_available);
-    //    assertNotNull(station1.last_reported);
     }
 
     @Test
