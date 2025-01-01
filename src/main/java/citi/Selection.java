@@ -1,4 +1,4 @@
-package taub.citi;
+package citi;
 
 public enum Selection
 {
