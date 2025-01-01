@@ -29,7 +29,8 @@ public class CitiBikeRequestHandler implements
         Stations stationsWithSlots = stationInfo
                 .combineStationInfo(stationStatus.data.stations, Selection.SLOT);
         Station returningStation = stationsWithSlots.findClosestStation(request.to().lat, request.to().lon);
-        CitiBikeResponse response = new CitiBikeResponse(request.from(), startingStation, returningStation, request.to());
+        CitiBikeResponse response =
+                new CitiBikeResponse(request.from(), startingStation, returningStation, request.to());
         return  response;
     }
 
