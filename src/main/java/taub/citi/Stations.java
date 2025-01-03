@@ -40,6 +40,7 @@ public class Stations
         for (int ix = 0; ix < stationStatus.size(); ix++)
         {
             Station station = stationStatus.get(ix);
+            station.name = stationInfo.get(ix).name;
             station.lat = stationInfo.get(ix).lat;
             station.lon = stationInfo.get(ix).lon;
 
