@@ -1,4 +1,4 @@
-package citi;
+package taub.citi;
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
@@ -34,22 +34,16 @@ public class CitiBikeRequestHandler implements
         return  response;
     }
 
-    record From(
-            double lat,
-            double lon
-    )
-    {}
-
-    record To(
+    record Location(
             double lat,
             double lon
     ) {}
 
     record CitiBikeResponse(
-       From from,
+       Location from,
        Station startingStation,
        Station endingStation,
-       To to
+       Location to
     ) {}
 
 
