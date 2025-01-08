@@ -1,4 +1,5 @@
 package taub.citi.view;
+
 import org.jxmapviewer.JXMapViewer;
 import org.jxmapviewer.OSMTileFactoryInfo;
 import org.jxmapviewer.cache.FileBasedLocalCache;
@@ -26,35 +27,24 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 
-
-/**
-     * A simple sample application that shows
-     * a OSM map of Europe
-     * @author Martin Steiger
-     */
     public class MapFrame extends JFrame
     {
-        /**
-         * @param args the program args (ignored)
-         */
         Set<Waypoint> waypoints = new HashSet<>();
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
         final JXMapViewer mapViewer = new JXMapViewer();
         RoutePainter routePainter;
         CompoundPainter<JXMapViewer> painter;
         boolean mapped = false;
+
         public MapFrame()
         {
             // Create a TileFactoryInfo for OpenStreetMap
             TileFactoryInfo info = new OSMTileFactoryInfo();
             DefaultTileFactory tileFactory = new DefaultTileFactory(info);
 
-
             // Setup local file cache
             File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
             tileFactory.setLocalCache(new FileBasedLocalCache(cacheDir, false));
-
-            // Setup JXMapViewer
 
             mapViewer.setTileFactory(tileFactory);
 
@@ -63,7 +53,6 @@ import java.util.Set;
             // Set the focus
             mapViewer.setZoom(7);
             mapViewer.setAddressLocation(newyork);
-
 
             // Add interactions
             MouseInputListener mia = new PanMouseInputListener(mapViewer);
@@ -175,11 +164,10 @@ import java.util.Set;
                 {
                     if (waypoints.size() != 2)
                     {
-                        JOptionPane.showMessageDialog(null, "You must have two points to create a route.\n" +
+                        JOptionPane.showMessageDialog(null, "You must have two points to create a route.\n"
+                                +
                                 "Either click to add more points, or press clear and start again.");
-                    }
-                    else
-                    {
+                    } else {
                         Waypoint [] points = waypoints.toArray(new Waypoint[0]);
                         Waypoint start = points[0];
                         Waypoint end = points[1];
@@ -219,8 +207,6 @@ import java.util.Set;
             painter = new CompoundPainter<JXMapViewer>(painters);
             mapViewer.setOverlayPainter(painter);
             mapped = true;
-
-
         }
 
 

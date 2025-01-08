@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Paints a route
+ *
  * @author Martin Steiger
  */
 public class RoutePainter implements Painter<JXMapViewer>
@@ -40,7 +41,9 @@ public class RoutePainter implements Painter<JXMapViewer>
         g.translate(-rect.x, -rect.y);
 
         if (antiAlias)
+        {
             g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        }
 
         // do the drawing
         g.setColor(Color.BLACK);
@@ -76,9 +79,7 @@ public class RoutePainter implements Painter<JXMapViewer>
             if (first)
             {
                 first = false;
-            }
-            else
-            {
+            } else {
                 g.drawLine(lastX, lastY, (int) pt.getX(), (int) pt.getY());
             }
 

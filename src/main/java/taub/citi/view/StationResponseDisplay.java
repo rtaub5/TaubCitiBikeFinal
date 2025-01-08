@@ -23,13 +23,9 @@ import java.util.*;
  */
 public class StationResponseDisplay
 {
-    /**
-     * @param args the program args (ignored)
-     */
-    public static void main(String[] args)
+    public void setFrame()
     {
         JXMapViewer mapViewer = new JXMapViewer();
-
         // Display the viewer in a JFrame
         JFrame frame = new JFrame("JXMapviewer2 Example 2");
         frame.getContentPane().add(mapViewer);
@@ -48,19 +44,9 @@ public class StationResponseDisplay
         GeoPosition station4 = new GeoPosition(40.71910537, -73.99973337);
         // Create a track from the geo-positions
         List<GeoPosition> track = Arrays.asList(station1, station2, station3, station4);
-        RoutePainter routePainter = new RoutePainter(track);
 
         // Set the focus
         mapViewer.zoomToBestFit(new HashSet<GeoPosition>(track), 0.7);
-
-        // Create waypoints from the geo-positions
-        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
-                new DefaultWaypoint(station1),
-                new DefaultWaypoint(station2),
-                new DefaultWaypoint(station3),
-                new DefaultWaypoint(station4)));
-
-
 
         // Add interactions
         MouseInputListener mia = new PanMouseInputListener(mapViewer);
@@ -80,10 +66,18 @@ public class StationResponseDisplay
         mapViewer.addMouseMotionListener(sa);
         mapViewer.setOverlayPainter(sp);
 
+        // Create waypoints from the geo-positions
+        Set<Waypoint> waypoints = new HashSet<Waypoint>(Arrays.asList(
+                new DefaultWaypoint(station1),
+                new DefaultWaypoint(station2),
+                new DefaultWaypoint(station3),
+                new DefaultWaypoint(station4)));
+
         // Create a waypoint painter that takes all the waypoints
         WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
         waypointPainter.setWaypoints(waypoints);
 
+        RoutePainter routePainter = new RoutePainter(track);
         // Create a compound painter that uses both the route-painter and the waypoint-painter
         List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
         painters.add(routePainter);
@@ -114,7 +108,7 @@ public class StationResponseDisplay
         updateWindowTitle(frame, mapViewer);
     }
 
-    protected static void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
+    protected void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
     {
         double lat = mapViewer.getCenterPosition().getLatitude();
         double lon = mapViewer.getCenterPosition().getLongitude();

@@ -10,6 +10,7 @@ import java.awt.geom.Point2D;
     /**
      * Creates a selection rectangle based on mouse input
      * Also triggers repaint events in the viewer
+     *
      * @author Martin Steiger
      */
     public class SelectionAdapter extends MouseAdapter
@@ -32,7 +33,9 @@ import java.awt.geom.Point2D;
         public void mousePressed(MouseEvent e)
         {
             if (e.getButton() != MouseEvent.BUTTON3)
+            {
                 return;
+            }
 
             startPos.setLocation(e.getX(), e.getY());
             endPos.setLocation(e.getX(), e.getY());
@@ -44,7 +47,9 @@ import java.awt.geom.Point2D;
         public void mouseDragged(MouseEvent e)
         {
             if (!dragging)
+            {
                 return;
+            }
 
             endPos.setLocation(e.getX(), e.getY());
 
@@ -55,10 +60,14 @@ import java.awt.geom.Point2D;
         public void mouseReleased(MouseEvent e)
         {
             if (!dragging)
+            {
                 return;
+            }
 
             if (e.getButton() != MouseEvent.BUTTON3)
+            {
                 return;
+            }
 
             viewer.repaint();
 
@@ -77,7 +86,7 @@ import java.awt.geom.Point2D;
                 int x2 = (int) Math.max(startPos.getX(), endPos.getX());
                 int y2 = (int) Math.max(startPos.getY(), endPos.getY());
 
-                return new Rectangle(x1, y1, x2-x1, y2-y1);
+                return new Rectangle(x1, y1, x2 - x1, y2 - y1);
             }
 
             return null;

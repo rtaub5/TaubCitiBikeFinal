@@ -6,6 +6,7 @@ import java.awt.*;
 
 /**
  * Paints a selection rectangle
+ *
  * @author Martin Steiger
  */
 public class SelectionPainter implements Painter<Object>
