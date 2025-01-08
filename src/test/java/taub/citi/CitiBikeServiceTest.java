@@ -1,7 +1,6 @@
 package taub.citi;
 
 import org.junit.jupiter.api.Test;
-import taub.citi.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

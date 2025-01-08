@@ -18,7 +18,7 @@ public class CitiBikeRequestHandler implements
         return response;
     }
 
-    private CitiBikeResponse findClosestStations(CitiBikeRequest request)
+    public CitiBikeResponse findClosestStations(CitiBikeRequest request)
     {
         CitiBikeService service = new CitiBikeServiceFactory().getService();
         Stations stationInfo = service.getStations().blockingGet();
