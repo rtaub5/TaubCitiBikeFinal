@@ -9,6 +9,7 @@ import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.plugins.RxJavaPlugins;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import retrofit2.Call;
@@ -28,11 +29,13 @@ public class CitiBikeLambdaServiceTest
     @Test
     void sendBikeRoute()
     {
-
         InputStream in = ClassLoader.getSystemResourceAsStream("bikeRoute.json");
         Reader reader = new InputStreamReader(in);
         Gson gson = new Gson();
         CitiBikeRequest request = gson.fromJson(reader, CitiBikeRequest.class);
         CitiBikeRequestHandler.CitiBikeResponse response = service.sendBikeRoute(request).blockingGet();
+        assertNotNull(response.startingStation());
+        assertNotNull(response.endingStation());
+
     }
 }

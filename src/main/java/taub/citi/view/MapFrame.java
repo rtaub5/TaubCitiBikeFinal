@@ -173,7 +173,8 @@ import java.util.Set;
                         orderedWaypoints.add(start);
                         orderedWaypoints.add(end);
                         MapController controller = new MapController(orderedWaypoints);
-                        Station startingStation = controller.getStartingStation();
+                        Station startingStation = controller.getStations();
+                      //  Station startingStation = controller.getStartingStation();
                         Station endingStation = controller.getEndingStation();
                         displayRoute(startingStation, endingStation, orderedWaypoints);
                     }
