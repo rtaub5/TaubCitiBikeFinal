@@ -18,6 +18,7 @@ public class StationsCache
     public static Instant lastModified;
     CitiBikeService service;
     Stations stationInfo;
+
     public Stations getStations()
     {
         long duration = Duration.between(lastModified, Instant.now()).toHours();
