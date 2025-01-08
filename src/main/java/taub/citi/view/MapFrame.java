@@ -216,7 +216,7 @@ import java.util.Set;
             double lon = mapViewer.getCenterPosition().getLongitude();
             int zoom = mapViewer.getZoom();
 
-            frame.setTitle(String.format("JXMapviewer2 Example 3 (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
+            frame.setTitle(String.format("CitiBike Map (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
         }
 
     }
