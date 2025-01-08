@@ -147,9 +147,7 @@ import java.util.Set;
                         waypoints.clear();
                         waypointPainter.setWaypoints(waypoints);
                         mapViewer.setOverlayPainter(waypointPainter);
-                    }
-                    else
-                    {
+                    } else {
                         painter.removePainter(waypointPainter);
                         painter.removePainter(routePainter);
                         mapped = false;
