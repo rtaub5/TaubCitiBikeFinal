@@ -21,7 +21,8 @@ public class CitiBikeRequestHandler implements
     public CitiBikeResponse findClosestStations(CitiBikeRequest request)
     {
         CitiBikeService service = new CitiBikeServiceFactory().getService();
-        Stations stationInfo = service.getStations().blockingGet();
+        StationsCache stationsCache = new StationsCache();
+        Stations stationInfo = stationsCache.getStations();
         Stations stationStatus = service.getStatuses().blockingGet();
         Stations stationsWithBikes =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);
