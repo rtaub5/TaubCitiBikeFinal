@@ -22,8 +22,8 @@ import java.util.List;
 
 public class CitiBikeLambdaServiceTest
 {
-
     CitiBikeLambdaService service = new CitiBikeLambdaServiceFactory().getService();
+
 
     @Test
     void sendBikeRoute()
