@@ -16,16 +16,20 @@ public class MapController
     CitiBikeRequestHandler.CitiBikeResponse response;
     GeoPosition start;
     GeoPosition end;
+
     public MapController(List<Waypoint> orderedWaypoints)
     {
         start = orderedWaypoints.get(0).getPosition();
         end = orderedWaypoints.get(1).getPosition();
-        CitiBikeRequestHandler.Location locationStart = new CitiBikeRequestHandler.Location(start.getLatitude(), start.getLongitude());
-        CitiBikeRequestHandler.Location locationEnd = new CitiBikeRequestHandler.Location(end.getLatitude(), end.getLongitude());
+        CitiBikeRequestHandler.Location locationStart =
+                new CitiBikeRequestHandler.Location(start.getLatitude(), start.getLongitude());
+        CitiBikeRequestHandler.Location locationEnd =
+                new CitiBikeRequestHandler.Location(end.getLatitude(), end.getLongitude());
         CitiBikeRequest request = new CitiBikeRequest(locationStart, locationEnd);
         response = service.sendBikeRoute(request).blockingGet();
 
     }
+
     public Station getStartingStation()
     {
         return  response.startingStation();
