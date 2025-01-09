@@ -36,6 +36,5 @@ public class CitiBikeLambdaServiceTest
         CitiBikeRequestHandler.CitiBikeResponse response = service.sendBikeRoute(request).blockingGet();
         assertNotNull(response.startingStation());
         assertNotNull(response.endingStation());
-
     }
 }

@@ -8,33 +8,23 @@ import org.jxmapviewer.input.PanKeyListener;
 import org.jxmapviewer.input.PanMouseInputListener;
 import org.jxmapviewer.input.ZoomMouseWheelListenerCursor;
 import org.jxmapviewer.painter.CompoundPainter;
-import org.jxmapviewer.painter.Painter;
 import org.jxmapviewer.viewer.*;
 import taub.citi.MapController;
-import taub.citi.Station;
-
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.util.HashSet;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
 
     public class MapFrame extends JFrame
     {
-        Set<Waypoint> waypoints = new HashSet<>();
-        WaypointPainter<Waypoint> waypointPainter = new WaypointPainter<Waypoint>();
         final JXMapViewer mapViewer = new JXMapViewer();
-        RoutePainter routePainter;
-        CompoundPainter<JXMapViewer> painter;
-        boolean mapped = false;
+        MapController controller;
 
         public MapFrame()
         {
@@ -45,15 +35,11 @@ import java.util.Set;
             // Setup local file cache
             File cacheDir = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
             tileFactory.setLocalCache(new FileBasedLocalCache(cacheDir, false));
-
             mapViewer.setTileFactory(tileFactory);
-
             GeoPosition newyork = new GeoPosition(40.82, -73.9);
-
             // Set the focus
             mapViewer.setZoom(7);
             mapViewer.setAddressLocation(newyork);
-
             // Add interactions
             MouseInputListener mia = new PanMouseInputListener(mapViewer);
             mapViewer.addMouseListener(mia);
@@ -83,6 +69,7 @@ import java.util.Set;
             addToolbar(frame, mapViewer);
 
             frame.setVisible(true);
+            controller = new MapController(mapViewer);
 
             mapViewer.addPropertyChangeListener("zoom", new PropertyChangeListener()
             {
@@ -110,11 +97,7 @@ import java.util.Set;
                 public void mouseClicked(MouseEvent e) {
                     int x = e.getX();
                     int y = e.getY();
-                    Point2D.Double point = new Point2D.Double(x, y);
-                    GeoPosition position = mapViewer.convertPointToGeoPosition(point);
-                    waypoints.add(new DefaultWaypoint(position));
-                    waypointPainter.setWaypoints(waypoints);
-                    mapViewer.setOverlayPainter(waypointPainter);
+                    controller.whenMouseClicked(x, y);
                 }
             });
 
@@ -142,16 +125,7 @@ import java.util.Set;
                 @Override
                 public void mouseClicked(MouseEvent e)
                 {
-                    if (!mapped)
-                    {
-                        waypoints.clear();
-                        waypointPainter.setWaypoints(waypoints);
-                        mapViewer.setOverlayPainter(waypointPainter);
-                    } else {
-                        painter.removePainter(waypointPainter);
-                        painter.removePainter(routePainter);
-                        mapped = false;
-                    }
+                    controller.clearScreen();
                 }
             });
 
@@ -160,66 +134,26 @@ import java.util.Set;
                 @Override
                 public void mouseClicked(MouseEvent e)
                 {
-                    if (waypoints.size() != 2)
+                    if (controller.getWaypointsSize() != 2)
                     {
                         JOptionPane.showMessageDialog(null, "You must have two points to create a route.\n"
                                 +
                                 "Either click to add more points, or press clear and start again.");
-                    } else {
-                        Waypoint [] points = waypoints.toArray(new Waypoint[0]);
-                        Waypoint start = points[0];
-                        Waypoint end = points[1];
-                        List<Waypoint> orderedWaypoints = new ArrayList<>();
-                        orderedWaypoints.add(start);
-                        orderedWaypoints.add(end);
-                        MapController controller = new MapController(orderedWaypoints);
-                        Station startingStation = controller.getStations();
-                      //  Station startingStation = controller.getStartingStation();
-                        Station endingStation = controller.getEndingStation();
-                        displayRoute(startingStation, endingStation, orderedWaypoints);
+                    } else
+                    {
+                        controller.doPoints();
                     }
                 }
             });
-
         }
-
-        private void displayRoute(Station startingStation, Station endingStation, List<Waypoint> orderedWaypoints)
-        {
-            GeoPosition startPosition = new GeoPosition(startingStation.lat, startingStation.lon);
-            GeoPosition endPosition = new GeoPosition(endingStation.lat, endingStation.lon);
-            orderedWaypoints.add(1, new DefaultWaypoint(startPosition));
-            orderedWaypoints.add(2, new DefaultWaypoint(endPosition));
-            waypoints = Set.copyOf(orderedWaypoints);
-            waypointPainter.setWaypoints(waypoints);
-            List<GeoPosition> track = new ArrayList<>();
-            for (Waypoint waypoint : orderedWaypoints)
-            {
-                track.add(waypoint.getPosition());
-            }
-            routePainter = new RoutePainter(track);
-            mapViewer.zoomToBestFit(new HashSet<GeoPosition>(track), 0.7);
-            // Create a compound painter that uses both the route-painter and the waypoint-painter
-            List<Painter<JXMapViewer>> painters = new ArrayList<Painter<JXMapViewer>>();
-            painters.add(routePainter);
-            painters.add(waypointPainter);
-
-            painter = new CompoundPainter<JXMapViewer>(painters);
-            mapViewer.setOverlayPainter(painter);
-            mapped = true;
-        }
-
-
-
 
         protected void updateWindowTitle(JFrame frame, JXMapViewer mapViewer)
         {
             double lat = mapViewer.getCenterPosition().getLatitude();
             double lon = mapViewer.getCenterPosition().getLongitude();
             int zoom = mapViewer.getZoom();
-
             frame.setTitle(String.format("CitiBike Map (%.2f / %.2f) - Zoom: %d", lat, lon, zoom));
         }
-
     }
 
 
