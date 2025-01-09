@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 public class CitiBikeRequestHandler implements
         RequestHandler<APIGatewayProxyRequestEvent, CitiBikeRequestHandler.CitiBikeResponse>
 {
+    CitiBikeService service = new CitiBikeServiceFactory().getService();
     private StationsCache stationsCache = new StationsCache();
 
     @Override
@@ -21,8 +22,10 @@ public class CitiBikeRequestHandler implements
 
     public CitiBikeResponse findClosestStations(CitiBikeRequest request)
     {
-        CitiBikeService service = new CitiBikeServiceFactory().getService();
-        Stations stationInfo = stationsCache.getStations();
+
+       // Stations stationInfo = service.getStations().blockingGet();
+        Stations stationInfo = stationsCache.getStations(service);
+      //  Stations stationInfo = stationsCache.getStationsTest(service);
         Stations stationStatus = service.getStatuses().blockingGet();
         Stations stationsWithBikes =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);

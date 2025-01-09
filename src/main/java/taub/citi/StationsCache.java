@@ -15,17 +15,28 @@ import java.time.LocalDateTime;
 
 public class StationsCache
 {
-    public static Instant lastModified;
-    CitiBikeService service;
+    public static Instant lastModified = Instant.ofEpochMilli(1715176763292L);
     Stations stationInfo;
+  //  S3Client s3Client;
+    public StationsCache()
+    {
 
-    public Stations getStations()
+
+
+    }
+
+    public Stations getStationsTest(CitiBikeService service)
+    {
+        return service.getStations().blockingGet();
+    }
+
+    public Stations getStations(CitiBikeService service)
     {
         long duration = Duration.between(lastModified, Instant.now()).toHours();
         if (stationInfo != null && duration < 1)
         {
             return  stationInfo;
-        } else if (stationInfo != null && duration > 1) {
+        }  else if (stationInfo != null && duration > 1) {
             stationInfo = service.getStations().blockingGet();
             lastModified = Instant.now();
             uploadStationsToS3();
@@ -33,9 +44,11 @@ public class StationsCache
         } else if (stationInfo == null && duration < 1)
         {
             readStationsFromS3();
+          //  stationInfo = service.getStations().blockingGet();
             lastModified = Instant.now();
 
-        } else {
+        }
+        else {
             stationInfo = service.getStations().blockingGet();
             lastModified = Instant.now();
             uploadStationsToS3();
@@ -63,7 +76,6 @@ public class StationsCache
     private void readStationsFromS3()
     {
         S3Client s3Client = S3Client.create();
-
         GetObjectRequest getObjectRequest = GetObjectRequest
                 .builder()
                 .bucket("taub.citibike")
@@ -73,5 +85,9 @@ public class StationsCache
         InputStream in = s3Client.getObject(getObjectRequest);
         Reader reader = new InputStreamReader(in);
         stationInfo  = new Gson().fromJson(reader, Stations.class);
+//        if (stationInfo == null)
+//        {
+//            stationInfo = service.getStations().blockingGet();
+//        }
     }
 }
