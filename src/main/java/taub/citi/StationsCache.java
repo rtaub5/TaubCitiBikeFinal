@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class StationsCache
 {
     public static Instant lastModified = Instant.ofEpochMilli(1715176763292L);
-    Stations stationInfo;
+    public static Stations stationInfo;
 
     public StationsCache()
     {
@@ -40,8 +40,6 @@ public class StationsCache
 
         } else if (stationInfo == null && duration < 1) {
             readStationsFromS3();
-            lastModified = Instant.now();
-
         } else {
             stationInfo = service.getStations().blockingGet();
             lastModified = Instant.now();
