@@ -10,7 +10,6 @@ import org.jxmapviewer.viewer.GeoPosition;
 import org.jxmapviewer.viewer.Waypoint;
 import org.jxmapviewer.viewer.WaypointPainter;
 import taub.citi.view.RoutePainter;
-
 import javax.swing.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
