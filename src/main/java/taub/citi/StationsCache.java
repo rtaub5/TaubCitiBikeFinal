@@ -38,17 +38,14 @@ public class StationsCache
             lastModified = Instant.now();
             uploadStationsToS3();
 
-        } else if (stationInfo == null && duration < 1)
-        {
+        } else if (stationInfo == null && duration < 1) {
             readStationsFromS3();
             lastModified = Instant.now();
 
-        }
-        else {
+        } else {
             stationInfo = service.getStations().blockingGet();
             lastModified = Instant.now();
             uploadStationsToS3();
-
         }
         return  stationInfo;
     }
