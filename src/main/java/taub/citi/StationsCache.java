@@ -17,12 +17,9 @@ public class StationsCache
 {
     public static Instant lastModified = Instant.ofEpochMilli(1715176763292L);
     Stations stationInfo;
-  //  S3Client s3Client;
+
     public StationsCache()
     {
-
-
-
     }
 
     public Stations getStationsTest(CitiBikeService service)
@@ -44,7 +41,6 @@ public class StationsCache
         } else if (stationInfo == null && duration < 1)
         {
             readStationsFromS3();
-          //  stationInfo = service.getStations().blockingGet();
             lastModified = Instant.now();
 
         }
@@ -85,9 +81,5 @@ public class StationsCache
         InputStream in = s3Client.getObject(getObjectRequest);
         Reader reader = new InputStreamReader(in);
         stationInfo  = new Gson().fromJson(reader, Stations.class);
-//        if (stationInfo == null)
-//        {
-//            stationInfo = service.getStations().blockingGet();
-//        }
     }
 }
