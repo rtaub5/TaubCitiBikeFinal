@@ -45,8 +45,10 @@ class CitiBikeRequestHandlerTest
     void findClosestStations()
     {
         // when call handler.findcloseststatinos
-        CitiBikeRequestHandler.Location from = new CitiBikeRequestHandler.Location(40.823682398765996, -73.95549774169922);
-        CitiBikeRequestHandler.Location to = new CitiBikeRequestHandler.Location(40.785220723422235, -73.9657974243164);
+        CitiBikeRequestHandler.Location from =
+                new CitiBikeRequestHandler.Location(40.823682398765996, -73.95549774169922);
+        CitiBikeRequestHandler.Location to =
+                new CitiBikeRequestHandler.Location(40.785220723422235, -73.9657974243164);
         CitiBikeRequest request = new CitiBikeRequest(from, to);
         CitiBikeRequestHandler handler = new CitiBikeRequestHandler();
         CitiBikeRequestHandler.CitiBikeResponse response = handler.findClosestStations(request);
@@ -55,14 +57,15 @@ class CitiBikeRequestHandlerTest
         CitiBikeService service = new CitiBikeServiceFactory().getService();
         Stations stationStatus = service.getStatuses().blockingGet();
         Stations stationInfo = service.getStations().blockingGet();
-        Stations stationsWithBikes =
+        Stations StationInfo =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);
-        Station startingStation = stationsWithBikes.findClosestStation(request.from().lat(), request.from().lon());
-        Stations stationsWithSlots = stationInfo
-                .combineStationInfo(stationStatus.data.stations, Selection.SLOT);
+        Station startingStation = StationInfo.findClosestStation(request.from().lat(), request.from().lon());
+        Stations stationsWithSlots =
+                stationInfo.combineStationInfo(stationStatus.data.stations, Selection.SLOT);
         Station returningStation = stationsWithSlots.findClosestStation(request.to().lat(), request.to().lon());
         CitiBikeRequestHandler.CitiBikeResponse response2 =
-                new CitiBikeRequestHandler.CitiBikeResponse(request.from(), startingStation, returningStation, request.to());
+                new CitiBikeRequestHandler
+                        .CitiBikeResponse(request.from(), startingStation, returningStation, request.to());
 
 
         assertEquals(response.startingStation().station_id, response2.startingStation().station_id);
