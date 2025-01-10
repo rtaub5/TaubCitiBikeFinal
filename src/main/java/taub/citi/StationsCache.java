@@ -51,14 +51,7 @@ public class StationsCache
                 readStationsFromS3();
             } else
             {
-                try
-                {
-                    stationInfo = service.getStations().blockingGet();
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+                stationInfo = service.getStations().blockingGet();
                 lastModified = Instant.now();
                 uploadStationsToS3();
             }
@@ -91,8 +84,8 @@ public class StationsCache
 
     private void readStationsFromS3()
     {
-        try
-        {
+      //  try
+      //  {
             S3Client s3Client = S3Client.create();
             GetObjectRequest getObjectRequest = GetObjectRequest
                     .builder()
@@ -103,10 +96,10 @@ public class StationsCache
             InputStream in = s3Client.getObject(getObjectRequest);
             Reader reader = new InputStreamReader(in);
             stationInfo = new Gson().fromJson(reader, Stations.class);
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
+     //   }
+     //   catch (Exception e)
+     //   {
+      //      e.printStackTrace();
+     //  }
     }
 }

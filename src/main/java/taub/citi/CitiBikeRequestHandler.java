@@ -17,6 +17,7 @@ public class CitiBikeRequestHandler implements
         Gson gson = new Gson();
         CitiBikeRequest request = gson.fromJson(body, CitiBikeRequest.class);
         CitiBikeResponse response = findClosestStations(request);
+
         return response;
     }
 
