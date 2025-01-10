@@ -8,6 +8,8 @@ import com.google.gson.Gson;
 public class CitiBikeRequestHandler implements
         RequestHandler<APIGatewayProxyRequestEvent, CitiBikeRequestHandler.CitiBikeResponse>
 {
+    CitiBikeService service = new CitiBikeServiceFactory().getService();
+    private StationsCache stationsCache = new StationsCache();
 
     @Override
     public CitiBikeResponse handleRequest(APIGatewayProxyRequestEvent event, Context context) {
@@ -15,13 +17,13 @@ public class CitiBikeRequestHandler implements
         Gson gson = new Gson();
         CitiBikeRequest request = gson.fromJson(body, CitiBikeRequest.class);
         CitiBikeResponse response = findClosestStations(request);
+
         return response;
     }
 
-    private CitiBikeResponse findClosestStations(CitiBikeRequest request)
+    public CitiBikeResponse findClosestStations(CitiBikeRequest request)
     {
-        CitiBikeService service = new CitiBikeServiceFactory().getService();
-        Stations stationInfo = service.getStations().blockingGet();
+        Stations stationInfo = stationsCache.getStations(service);
         Stations stationStatus = service.getStatuses().blockingGet();
         Stations stationsWithBikes =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);

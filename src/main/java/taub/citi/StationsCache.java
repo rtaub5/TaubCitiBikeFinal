@@ -1,0 +1,98 @@
+package taub.citi;
+
+import com.google.gson.Gson;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+
+import java.io.*;
+import java.sql.Time;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.LocalDateTime;
+
+public class StationsCache
+{
+    public static Instant lastModified = Instant.ofEpochMilli(1715176763292L);
+    public static Stations stationInfo;
+
+    public StationsCache()
+    {
+    }
+
+    public Stations getStationsTest(CitiBikeService service)
+    {
+        return service.getStations().blockingGet();
+    }
+
+    public Stations getStations(CitiBikeService service)
+    {
+            long duration = Duration.between(lastModified, Instant.now()).toHours();
+            if (stationInfo != null && duration < 1)
+            {
+                return stationInfo;
+            } else if (stationInfo != null && duration > 1)
+            {
+                try
+                {
+                    stationInfo = service.getStations().blockingGet();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                lastModified = Instant.now();
+                uploadStationsToS3();
+
+            } else if (stationInfo == null && duration < 1)
+            {
+                readStationsFromS3();
+            } else
+            {
+                stationInfo = service.getStations().blockingGet();
+                lastModified = Instant.now();
+                uploadStationsToS3();
+            }
+            return stationInfo;
+
+    }
+
+    private void uploadStationsToS3()
+    {
+        try
+        {
+            Region region = Region.US_EAST_2;
+            S3Client s3Client = S3Client.builder()
+                    .region(region)
+                    .build();
+
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket("taub.citibike")
+                    .key("station_information.json")
+                    .build();
+            Gson gson = new Gson();
+            String content = gson.toJson(stationInfo);
+            s3Client.putObject(putObjectRequest, RequestBody.fromString(content));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    private void readStationsFromS3()
+    {
+        S3Client s3Client = S3Client.create();
+        GetObjectRequest getObjectRequest = GetObjectRequest
+                .builder()
+                .bucket("taub.citibike")
+                .key("station_information.json")
+                .build();
+
+        InputStream in = s3Client.getObject(getObjectRequest);
+        Reader reader = new InputStreamReader(in);
+        stationInfo = new Gson().fromJson(reader, Stations.class);
+    }
+}
