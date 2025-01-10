@@ -84,22 +84,15 @@ public class StationsCache
 
     private void readStationsFromS3()
     {
-      //  try
-      //  {
-            S3Client s3Client = S3Client.create();
-            GetObjectRequest getObjectRequest = GetObjectRequest
-                    .builder()
-                    .bucket("taub.citibike")
-                    .key("station_information.json")
-                    .build();
+        S3Client s3Client = S3Client.create();
+        GetObjectRequest getObjectRequest = GetObjectRequest
+                .builder()
+                .bucket("taub.citibike")
+                .key("station_information.json")
+                .build();
 
-            InputStream in = s3Client.getObject(getObjectRequest);
-            Reader reader = new InputStreamReader(in);
-            stationInfo = new Gson().fromJson(reader, Stations.class);
-     //   }
-     //   catch (Exception e)
-     //   {
-      //      e.printStackTrace();
-     //  }
+        InputStream in = s3Client.getObject(getObjectRequest);
+        Reader reader = new InputStreamReader(in);
+        stationInfo = new Gson().fromJson(reader, Stations.class);
     }
 }
