@@ -57,9 +57,9 @@ class CitiBikeRequestHandlerTest
         CitiBikeService service = new CitiBikeServiceFactory().getService();
         Stations stationStatus = service.getStatuses().blockingGet();
         Stations stationInfo = service.getStations().blockingGet();
-        Stations StationInfo =
+        Stations stationsWithBikes =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.BIKE);
-        Station startingStation = StationInfo.findClosestStation(request.from().lat(), request.from().lon());
+        Station startingStation = stationsWithBikes.findClosestStation(request.from().lat(), request.from().lon());
         Stations stationsWithSlots =
                 stationInfo.combineStationInfo(stationStatus.data.stations, Selection.SLOT);
         Station returningStation = stationsWithSlots.findClosestStation(request.to().lat(), request.to().lon());
