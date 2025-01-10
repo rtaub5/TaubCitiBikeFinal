@@ -29,52 +29,84 @@ public class StationsCache
 
     public Stations getStations(CitiBikeService service)
     {
-        long duration = Duration.between(lastModified, Instant.now()).toHours();
-        if (stationInfo != null && duration < 1)
-        {
-            return  stationInfo;
-        }  else if (stationInfo != null && duration > 1) {
-            stationInfo = service.getStations().blockingGet();
-            lastModified = Instant.now();
-            uploadStationsToS3();
+            long duration = Duration.between(lastModified, Instant.now()).toHours();
+            if (stationInfo != null && duration < 1)
+            {
+                return stationInfo;
+            } else if (stationInfo != null && duration > 1)
+            {
+                try
+                {
+                    stationInfo = service.getStations().blockingGet();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                lastModified = Instant.now();
+                uploadStationsToS3();
 
-        } else if (stationInfo == null && duration < 1) {
-            readStationsFromS3();
-        } else {
-            stationInfo = service.getStations().blockingGet();
-            lastModified = Instant.now();
-            uploadStationsToS3();
-        }
-        return  stationInfo;
+            } else if (stationInfo == null && duration < 1)
+            {
+                readStationsFromS3();
+            } else
+            {
+                try
+                {
+                    stationInfo = service.getStations().blockingGet();
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+                lastModified = Instant.now();
+                uploadStationsToS3();
+            }
+            return stationInfo;
+
     }
 
     private void uploadStationsToS3()
     {
-        Region region = Region.US_EAST_2;
-        S3Client s3Client = S3Client.builder()
-                .region(region)
-                .build();
+        try
+        {
+            Region region = Region.US_EAST_2;
+            S3Client s3Client = S3Client.builder()
+                    .region(region)
+                    .build();
 
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket("taub.citibike")
-                .key("station_information.json")
-                .build();
-        Gson gson = new Gson();
-        String content = gson.toJson(stationInfo);
-        s3Client.putObject(putObjectRequest, RequestBody.fromString(content));
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket("taub.citibike")
+                    .key("station_information.json")
+                    .build();
+            Gson gson = new Gson();
+            String content = gson.toJson(stationInfo);
+            s3Client.putObject(putObjectRequest, RequestBody.fromString(content));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     private void readStationsFromS3()
     {
-        S3Client s3Client = S3Client.create();
-        GetObjectRequest getObjectRequest = GetObjectRequest
-                .builder()
-                .bucket("taub.citibike")
-                .key("station_information.json")
-                .build();
+        try
+        {
+            S3Client s3Client = S3Client.create();
+            GetObjectRequest getObjectRequest = GetObjectRequest
+                    .builder()
+                    .bucket("taub.citibike")
+                    .key("station_information.json")
+                    .build();
 
-        InputStream in = s3Client.getObject(getObjectRequest);
-        Reader reader = new InputStreamReader(in);
-        stationInfo  = new Gson().fromJson(reader, Stations.class);
+            InputStream in = s3Client.getObject(getObjectRequest);
+            Reader reader = new InputStreamReader(in);
+            stationInfo = new Gson().fromJson(reader, Stations.class);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
